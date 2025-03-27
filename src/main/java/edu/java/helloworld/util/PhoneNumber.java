@@ -17,5 +17,5 @@ public @interface PhoneNumber {
     String message() default "Invalid phone number";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String value();
+    String value() default "helloworld";
 }

@@ -15,7 +15,8 @@ public class UserRequestDTO implements Serializable {
     private String lastName;
     @Email(message = "phai la email nhat dinh")
     private String email;
-    @PhoneNumber(value = "42244242")
+   // @PhoneNumber // khong truyen value
+    @PhoneNumber(value="dasadsdasdasd") // khong truyen value
     private String phone;
 
 
