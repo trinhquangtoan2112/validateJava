@@ -3,6 +3,7 @@ package edu.java.helloworld.dto.request;
 import java.io.Serializable;
 
 import edu.java.helloworld.util.PhoneNumber;
+import edu.java.helloworld.util.Regex;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +19,9 @@ public class UserRequestDTO implements Serializable {
    // @PhoneNumber // khong truyen value
     @PhoneNumber(value="dasadsdasdasd") // khong truyen value
     private String phone;
-
+    
+@Regex(name = "status", regexp = "ACTIVE|INACTIVE|NONE")
+    private String test;
 
     public UserRequestDTO(String firstName,String lastName, String email, String phone){
       this.email=email;
