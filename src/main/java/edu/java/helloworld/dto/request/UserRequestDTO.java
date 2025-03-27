@@ -2,10 +2,11 @@ package edu.java.helloworld.dto.request;
 
 import java.io.Serializable;
 
+import edu.java.helloworld.util.PhoneNumber;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+
 
 public class UserRequestDTO implements Serializable {
     @NotBlank(message = "khong duoc de trong first name")
@@ -14,7 +15,7 @@ public class UserRequestDTO implements Serializable {
     private String lastName;
     @Email(message = "phai la email nhat dinh")
     private String email;
-    @Pattern(regexp = "^\\d{10}$",message = "phone invalied format")
+    @PhoneNumber(value = "42244242")
     private String phone;
 
 
