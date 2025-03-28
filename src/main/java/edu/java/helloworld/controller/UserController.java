@@ -2,9 +2,10 @@ package edu.java.helloworld.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.java.helloworld.configuration.Translator;
 import edu.java.helloworld.dto.SampleDTO;
 import edu.java.helloworld.dto.request.UserRequestDTO;
 import edu.java.helloworld.dto.response.ResponseData;
@@ -13,10 +14,7 @@ import edu.java.helloworld.dto.response.ResponseFailed;
 import edu.java.helloworld.dto.response.ResponseSuccess;
 import edu.java.helloworld.exception.ResourceNotFoundExecptionExecption;
 import edu.java.helloworld.services.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -63,7 +61,7 @@ public class UserController {
         userService.addUser(user);
 
       
-        return new ResponseData(HttpStatus.CREATED.value(), "Them du lieu thanh cong",1);
+        return new ResponseData(HttpStatus.CREATED.value(), Translator.toLocale("user.add.success"),1);
        }
        catch (ResourceNotFoundExecptionExecption e) {
         System.out.println(e.getMessage());
