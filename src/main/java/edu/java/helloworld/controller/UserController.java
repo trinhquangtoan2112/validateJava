@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.java.helloworld.dto.SampleDTO;
 import edu.java.helloworld.dto.request.UserRequestDTO;
 import edu.java.helloworld.dto.response.ResponseData;
 import edu.java.helloworld.dto.response.ResponseError;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,7 @@ import org.springframework.http.*;
 
 @RestController
 @RequestMapping("/users")
+@Slf4j  // su dung de hien thi log
 public class UserController {
 
     @Autowired
@@ -50,8 +53,16 @@ public class UserController {
     //   @ResponseStatus(HttpStatus.CREATED)
       // tu dong tao response data co swagger
     public ResponseData addUser(@Valid @RequestBody UserRequestDTO user) {
+        SampleDTO sampleDTO =  SampleDTO.builder().id(1).name("Toam").build();
+        // System.out.printf("ID: %d, Ten: %s%n", sampleDTO.getId(), sampleDTO.getName());
+       System.out.println(sampleDTO.toString()); 
+        log.info("sssss");
+        log.error("error");
+        log.warn("warn");
        try {
         userService.addUser(user);
+
+      
         return new ResponseData(HttpStatus.CREATED.value(), "Them du lieu thanh cong",1);
        }
        catch (ResourceNotFoundExecptionExecption e) {

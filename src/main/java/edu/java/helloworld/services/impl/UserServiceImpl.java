@@ -10,7 +10,7 @@ import edu.java.helloworld.services.UserService;
 public class UserServiceImpl implements UserService {
     @Override
     public int addUser(UserRequestDTO userRequestDTO) {
-       System.out.println("Add user");
+   
        if(!userRequestDTO.getFirstName().equals("Tay")){
         throw new ResourceNotFoundExecptionExecption("Khong tim thay nguoi dung");
        }
