@@ -17,8 +17,8 @@ public class UserController {
     @PostMapping("/")
     public String addUser( @Valid @RequestBody UserRequestDTO userRequestDTO) {
         
-        UserRequestDTO userDTO = new UserRequestDTO(userRequestDTO.getFirstName(), userRequestDTO.getLastName(), userRequestDTO.getEmail(),userRequestDTO.getPhone());
-        System.out.println(userDTO.getFirstName());
+        UserRequestDTO userDTO = new UserRequestDTO(userRequestDTO.getFirstName(), userRequestDTO.getLastName(), userRequestDTO.getEmail(),userRequestDTO.getPhone(), userRequestDTO.getUserStatus());
+      System.out.println(userDTO.getFirstName());
         return "da nhan";
     }
     

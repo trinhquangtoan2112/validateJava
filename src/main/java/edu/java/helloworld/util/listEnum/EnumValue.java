@@ -1,5 +1,4 @@
-package edu.java.helloworld.util;
-
+package edu.java.helloworld.util.listEnum;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,14 +8,14 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Documented
-@Target(ElementType.FIELD)
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy =  RegexValidtor.class)
-public @interface Regex {
+@Documented
+@Constraint(validatedBy = EnumValueValidator.class)
+public @interface EnumValue {
     String name();
-    String regexp();
-    String message() default "{name} must match {regexp}";
+    String message() default "{name} must be any of enum {enumClass}";
+    Class<? extends Enum<?>> enumClass();
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
