@@ -20,8 +20,8 @@ public class EnumValueValidator implements ConstraintValidator<EnumValue, CharSe
         if (value == null) {
             return true;
         }
-        return true;
-        // return acceptedValues.contains(value.toString().toUpperCase());
+        // return true;
+        return acceptedValues.contains(value.toString().toUpperCase());
     }
     
 }

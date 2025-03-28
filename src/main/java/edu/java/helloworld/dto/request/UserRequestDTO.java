@@ -42,7 +42,7 @@ public class UserRequestDTO implements Serializable {
 
     //Ưu điểm của phương pháp này là có thể áp dụng chung cho tất cả enum và dễ dàng handle exception.
     @NotNull(message = "type must be not null")
-    @EnumValue(name = "type", enumClass = UserType.class)
+    @EnumValue(name = "type", enumClass = UserType.class, message = "Khong phai type duoc cho")
     private String type;
 
     public UserRequestDTO(String firstName,String lastName, String email, String phone){

@@ -25,7 +25,7 @@ public class RegexValidtor implements ConstraintValidator<Regex, Enum<?>> {
         if (value == null) {
             return true;
         }
-        System.out.println(value +" 8888");
+      
         // can name vi value la mot gia tri enum ko phai la string value o sysout thi co the hien ra man hinh
         Matcher m = pattern.matcher(value.name());
         return m.matches();
