@@ -53,20 +53,12 @@ public class UserController {
     public ResponseData addUser(@Valid @RequestBody UserRequestDTO user) {
         SampleDTO sampleDTO =  SampleDTO.builder().id(1).name("Toam").build();
         // System.out.printf("ID: %d, Ten: %s%n", sampleDTO.getId(), sampleDTO.getName());
-       System.out.println(sampleDTO.toString()); 
-        log.info("sssss");
-        log.error("error");
-        log.warn("warn");
-       try {
-        userService.addUser(user);
+       System.out.println(sampleDTO.toString());
+          System.out.println("toaN2002");
 
       
         return new ResponseData(HttpStatus.CREATED.value(), Translator.toLocale("user.add.success"),1);
-       }
-       catch (ResourceNotFoundExecptionExecption e) {
-        System.out.println(e.getMessage());
-        return new ResponseError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
-       }
+
     //    } catch (Exception e) {
     //     System.out.println(e.getMessage());
     //     return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Loi them nguoi dung");

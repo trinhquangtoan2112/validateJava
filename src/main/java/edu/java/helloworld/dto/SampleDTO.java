@@ -2,24 +2,22 @@ package edu.java.helloworld.dto;
 
 import java.io.Serializable;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
-
-
+import lombok.*;
 
 
 //@Data   =@Settter + @Getter + @EqualsAndHashCode + @ToString
-@Builder
+
 @Getter 
 @ToString
+@Builder
+
 public class SampleDTO implements Serializable {
     private int id;
    // loai bo name
    @ToString.Exclude()
     private String name;
 
-    @Override
+   /* @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -44,7 +42,7 @@ public class SampleDTO implements Serializable {
         } else if (!name.equals(other.name))
             return false;
         return true;
-    }
+    }*/
    
 }
 
