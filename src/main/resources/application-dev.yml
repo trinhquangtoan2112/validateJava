@@ -4,9 +4,21 @@ spring:
   config:
     activate:
       on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: toan2002
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update # Options: none, validate, update, create, create-drop
+    show-sql: true # Enables SQL query logging
+    properties:
+      hibernate:
+        format_sql: true # Pretty-print SQL logs
 openapi:
   service:
     api-docs: api-service
     server: http://localhost:${server.port}
-    title: API Service
+    title: ${API_TITLE:DUMMY_API_TITLE}
     version: 1.0.0

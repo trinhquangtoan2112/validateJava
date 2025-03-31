@@ -1,6 +1,12 @@
 package edu.java.helloworld.dto.request;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import edu.java.helloworld.model.Gender;
 import edu.java.helloworld.model.UserStatus;
@@ -11,11 +17,19 @@ import edu.java.helloworld.util.Gender.GenderAnotation;
 import edu.java.helloworld.util.listEnum.EnumValue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRequestDTO implements Serializable {
-    @NotBlank(message = "khong duoc de trong first name")
+
+ @NotBlank(message = "khong duoc de trong first name")
     private String firstName;
     @NotNull(message = "khong duoc bo trong")
     private String lastName;
@@ -25,7 +39,10 @@ public class UserRequestDTO implements Serializable {
     @PhoneNumber(value="dasadsdasdasd") // khong truyen value
     private String phone;
     
-
+@NotNull(message = "dateOfBirth must be not null")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "MM/dd/yyyy")
+    private Date dateOfBirth;
      
     //Chi su dung cach nay cho String nhung neu dung thi khong the dung Enum nua
     // @Pattern(regexp = "^ACTIVE|INACTIVE|HOME$", message = "status mus be one in {ACTIVE, INACTIVE, NONE}")
@@ -45,65 +62,19 @@ public class UserRequestDTO implements Serializable {
     @EnumValue(name = "type", enumClass = UserType.class, message = "Khong phai type duoc cho")
     private String type;
 
-    public UserRequestDTO(String firstName,String lastName, String email, String phone){
-      this.email=email;
-      this.firstName=firstName;
-      this.lastName=lastName;
-      this.phone=phone;
-    }
+    @NotNull(message = "username must be not null")
+    private String username;
 
-    public String getFirstName() {
-        return firstName;
-    }
-    
-    public void setFirstName(String firstName) {
+    @NotNull(message = "password must be not null")
+    private String password;
+
+    @NotEmpty(message = "addresses can not empty")
+    private Set<AddressRequestDTO> addresses;
+
+    public UserRequestDTO(String firstName, String lastName, String email, String phone) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public UserStatus getUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }
