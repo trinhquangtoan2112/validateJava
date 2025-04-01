@@ -99,9 +99,30 @@ criteriaList.add(new SearchCriteria(matcher.group(1),matcher.group(2),matcher.gr
     }
 
     List<User> user = getUsers(pageNo,pageSize,criteriaList,sortBy,address);
-   
-    return PageRespones.builder().pageNo(pageNo).pageSize(pageSize).totalPage(0).item(user).build();
+   Long totalElement =getTotalElement(criteriaList,address);
+    return PageRespones.builder().pageNo(pageNo).pageSize(pageSize).totalPage(totalElement.intValue()).item(user).build();
 }
+private Long getTotalElement(List<SearchCriteria> criteriaList, String address) {
+    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+   CriteriaQuery<Long> query =criteriaBuilder.createQuery(Long.class);
+   Root<User> root = query.from(User.class);
+    
+   Predicate predicate = criteriaBuilder.conjunction();
+     UserSearchCriteriaQueryConsumer  queryConsumer = new UserSearchCriteriaQueryConsumer(criteriaBuilder,predicate,root);
+   System.out.println(address+"1212441241");
+   criteriaList.forEach(queryConsumer);
+   predicate= queryConsumer.getPredicate();
+     if(StringUtils.hasLength(address)){
+        Join<Address,User> addressJoinUser = root.join("addresses");
+        Predicate addressPredicate =criteriaBuilder.like(addressJoinUser.get("city"), "%"+address+"%");
+        query.where(predicate,addressPredicate);    
+    }else{
+        query.where(predicate);
+    }
+    return entityManager.createQuery(query).getSingleResult(); 
+ 
+}
+
 private List<User> getUsers(int pageNo, int pageSize, List<SearchCriteria> criteriaList, String sortBy,String address) {
    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
    CriteriaQuery<User> query =criteriaBuilder.createQuery(User.class);
