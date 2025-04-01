@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.java.helloworld.dto.SampleDTO;
 import edu.java.helloworld.dto.request.UserRequestDTO;
 import edu.java.helloworld.dto.response.ResponseData;
 import edu.java.helloworld.dto.response.ResponseError;
 import edu.java.helloworld.dto.response.ResponseFailed;
 import edu.java.helloworld.dto.response.ResponseSuccess;
-import edu.java.helloworld.exception.ResourceNotFoundExecptionExecption;
+import edu.java.helloworld.dto.response.Repository.UserDetailResponse;
+import edu.java.helloworld.dto.response.page.PageRespones;
 import edu.java.helloworld.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -83,13 +83,54 @@ public class UserController {
     }
     @GetMapping("/list")
     public ResponseSuccess getAllUser(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                                           @Min(10) @Max(20) @RequestParam(defaultValue = "20", required = false) int pageSize) {
-        return new ResponseSuccess(HttpStatus.OK, "Them du lieu thanh cong", List.of(new UserRequestDTO("Tay", "Java", "admin@tayjava.vn", "0123456789"),
-        new UserRequestDTO("Leo", "Messi", "leomessi@email.com", "0123456456")));
+                                           @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                           @RequestParam(required = false) String sortBy
+                                           ) {
+                                           
+                                            List<UserDetailResponse> list= userService.getAllUser(pageNo, pageSize,sortBy);
+        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",list);
         
        
     }
-    
-  
-    
+    @Operation(description = "with multi column",summary = "with multi coloumn")
+    @GetMapping("/mutliList")
+    public ResponseSuccess getAllUserWithMultiSort(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                           @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                           @RequestParam(required = false) String... sortBy
+                                           ) {
+                                           
+                                           PageRespones<?> list= userService.getAllUserWithMultiColoum(pageNo, pageSize,sortBy);
+        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",list);
+        
+       
+    }
+    @Operation(description = "with column + search",summary = "with column + search")
+    @GetMapping("/search")
+    public ResponseSuccess getAllUserWithSortSearch(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                           @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                    
+@RequestParam(required = false) String search,
+@RequestParam(required = false) String sortBy
+                                           ) {
+                                           
+                                           PageRespones<?> list= userService.getAllUserWithColoumandSearch( pageSize,pageNo,search,sortBy);
+        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",list);
+        
+       
+    }
+
+    @Operation(description = "advanced-search",summary = "advanced-search")
+    @GetMapping("/advanced-search")
+    public ResponseSuccess advancedSearch(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                          @RequestParam(defaultValue = "20", required = false) int pageSize,          
+                                         @RequestParam(required = false) String address,
+                                          @RequestParam(required = false) String sortBy,
+                                          @RequestParam(required = false) String... search
+                                           ) {
+                                           
+                                           
+        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",userService.advancedSearch( pageSize,pageNo,sortBy,address,search));
+        
+       
+    }
 }

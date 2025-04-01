@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,7 +16,9 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tbl_user")
+@Entity(name = "User")
+@Table(name = "tbl_user")
+
 public class User extends AbstractEntity {
     @Column(name = "first_name")
     private String firstName;
@@ -54,6 +57,9 @@ public class User extends AbstractEntity {
     @Column(name = "status")
     private UserStatus status;
 
+
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
 
