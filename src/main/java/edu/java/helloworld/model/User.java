@@ -57,8 +57,6 @@ public class User extends AbstractEntity {
     @Column(name = "status")
     private UserStatus status;
 
-
-
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
