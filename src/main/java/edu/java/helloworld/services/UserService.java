@@ -2,6 +2,8 @@ package edu.java.helloworld.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import edu.java.helloworld.dto.request.UserRequestDTO;
 import edu.java.helloworld.dto.response.Repository.UserDetailResponse;
 import edu.java.helloworld.dto.response.page.PageRespones;
@@ -25,4 +27,5 @@ public interface UserService{
     PageRespones<?> getAllUserWithColoumandSearch(int pageSize,int pageNo,String search,String sortBy);
     PageRespones<?> advancedSearch(int pageSize,int pageNo,String sortBy,String address,String... search);
 
+    PageRespones<?> advancedSearchWithSpecition(Pageable pageable,String[] address,String[] user);
 }

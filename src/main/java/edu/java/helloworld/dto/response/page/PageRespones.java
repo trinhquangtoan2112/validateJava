@@ -10,6 +10,6 @@ import lombok.Getter;
 public class PageRespones<T> implements Serializable {
     private int pageNo;
     private int pageSize;
-    private int totalPage;
+    private long totalPage;
     private T item;
 }

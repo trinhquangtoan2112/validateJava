@@ -19,7 +19,7 @@ public class GlobalExecptionHandler {
     @ExceptionHandler({MethodArgumentNotValidException.class,ConstraintViolationException.class,HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleValidate(Exception e ,WebRequest request){
-        System.out.println("=======>+MethodArgumentNotValidException");
+    
                ErrorResponse errorResponse = new ErrorResponse();
 
                errorResponse.setTimestamp(new Date());
@@ -46,7 +46,7 @@ public class GlobalExecptionHandler {
     @ExceptionHandler({HandlerMethodValidationException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleServerError(Exception e ,WebRequest request){
-        System.out.println("=======>+handleServerError");
+       
                ErrorResponse errorResponse = new ErrorResponse();
 
                errorResponse.setTimestamp(new Date());
