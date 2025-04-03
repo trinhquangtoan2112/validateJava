@@ -71,6 +71,12 @@ public class UserController {
         return new ResponseSuccess(HttpStatus.ACCEPTED, "Them du lieu thanh cong");
     }
 
+    @GetMapping("/confirmUser/{userId}")
+    public ResponseData<?> confirmUser(@PathVariable int userId, @RequestParam String sercetCode) {
+
+        return new ResponseData(HttpStatus.ACCEPTED.value(), "Them du lieu thanh cong");
+    }
+
     @DeleteMapping("/{userId}")
     public ResponseSuccess deleteUser(
             @PathVariable @Min(value = 1, message = "userId must be greater than 0") int userId) {
@@ -133,8 +139,5 @@ public class UserController {
         return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",
                 userService.advancedSearchWithSpecition(pageable, address, user));
     }
-
-    
-
 
 }

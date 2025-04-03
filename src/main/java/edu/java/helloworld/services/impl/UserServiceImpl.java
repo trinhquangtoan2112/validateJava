@@ -12,9 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
+import org.thymeleaf.spring6.SpringTemplateEngine;
 import edu.java.helloworld.dto.request.AddressRequestDTO;
 import edu.java.helloworld.dto.request.UserRequestDTO;
 import edu.java.helloworld.dto.response.Repository.UserDetailResponse;
@@ -27,8 +28,10 @@ import edu.java.helloworld.model.UserType;
 import edu.java.helloworld.repository.SearchRepository;
 import edu.java.helloworld.repository.UserRepository;
 import edu.java.helloworld.repository.specification.UserSpecitificationBuilder;
+import edu.java.helloworld.services.MailService;
 import edu.java.helloworld.services.UserService;
 import edu.java.helloworld.util.AppConst;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,8 +39,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+  private final SpringTemplateEngine springTemplateEngine;
   private final UserRepository userRepository;
   private final SearchRepository searchRepository;
+  private final MailService mailService;
+  private final KafkaTemplate<String, String> kafkaTemplate;
 
   @Override
   public long saveUser(UserRequestDTO request) {
@@ -65,8 +72,22 @@ public class UserServiceImpl implements UserService {
         .country(a.getCountry())
         .addressType(a.getAddressType())
         .build()));
-    userRepository.save(user);
-    log.info("User has save succefully");
+    User users = userRepository.save(user);
+
+    // if (user.getId() != null && user.getEmail() != null) {
+    // // send email confirm here
+    // try {
+    // mailService.sendConfirmEmail(user.getEmail(), user.getId(), "sercetCode");
+    // } catch (Exception e) {
+    // log.error("Loi khi gui email", e.getMessage());
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    // }
+    if (users != null) {
+      String message = String.format("email=%s,id=%s,code=%s", user.getEmail(), user.getId(), "code@123");
+      kafkaTemplate.send("confirm-account-topic", message);
+    }
     return user.getId();
   }
 
