@@ -100,10 +100,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     // List<User> findByFirstNameAndLastNameAllIgnore(String firtsName,String
     // lastName)
 
-    // viet native query
-    @Query(value = "select * from tbl_user", nativeQuery = true)
-    List<User> getAllUser();
+    // // viet native query
+    // @Query(value = "select * from tbl_user", nativeQuery = true)
+    // List<User> getAllUser();
 
-    @Query(value = "select * from tbl_user u inner join tbl_address a  on u.id= a.userId where a.city =:city", nativeQuery = true)
-    List<User> getUserByCity(String city);
+    // @Query(value = "select * from tbl_user u inner join tbl_address a on u.id=
+    // a.userId where a.city =:city", nativeQuery = true)
+    // List<User> getUserByCity(String city);
 }
