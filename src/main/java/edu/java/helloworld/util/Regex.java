@@ -10,12 +10,13 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = PhoneValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PhoneNumber {
-    String message() default "Invalid phone number";
+@Constraint(validatedBy =  RegexValidtor.class)
+public @interface Regex {
+    String name();
+    String regexp();
+    String message() default "{name} must match {regexp}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String value() default "helloworld";
 }

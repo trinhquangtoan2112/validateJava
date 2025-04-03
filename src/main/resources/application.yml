@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: edu.java.helloworld
+  profiles:
+    active: @spring.profiles.active@
