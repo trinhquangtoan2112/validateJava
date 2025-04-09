@@ -17,7 +17,7 @@ spring:
       hibernate:
         format_sql: true # Pretty-print SQL logs
   kafka:
-    bootstrap-server: localhost:29092
+    bootstrap-server: localhost:9092
 openapi:
   service:
     api-docs: api-service
