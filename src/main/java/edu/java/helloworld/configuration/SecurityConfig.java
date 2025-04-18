@@ -2,7 +2,6 @@ package edu.java.helloworld.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,10 +30,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequest -> authorizeRequest.requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(
+                        authorizeRequest -> authorizeRequest.requestMatchers("/login", "/swagger-ui/index.html")
+                                .permitAll()
+                                .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(provider()).addFilter(filter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(provider());
+        // .addFilter(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

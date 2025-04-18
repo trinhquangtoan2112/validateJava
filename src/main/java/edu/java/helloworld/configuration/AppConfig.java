@@ -21,12 +21,12 @@ import java.io.IOException;
 /*@Configurable
 public class AppConfig implements WebMvcConfigurer  {
 *//*  cach 1
-          @Override
-          public void addCorsMappings(CorsRegistry registry) {
-              registry.addMapping("/**").allowCredentials(true);
-          }
-        *//*
-                }*/
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowCredentials(true);
+            }
+          *//*
+                    }*/
 //@Configurable
 //public class AppConfig  {
 //
