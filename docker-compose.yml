@@ -14,14 +14,14 @@ services:
     - backend
  postgres:
     image: postgres:16
-    container_name: postgres
+    container_name: postgres12
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: toan2002
+      POSTGRES_PASSWORD: toan20021234
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     
 
 #  api-service-test: 

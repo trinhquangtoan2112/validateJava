@@ -1,6 +1,7 @@
 package edu.java.helloworld.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.java.helloworld.model.User;
 
+//////
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     // hai cai nay ngang nhayu lay gia tri distint
@@ -107,4 +109,8 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     // @Query(value = "select * from tbl_user u inner join tbl_address a on u.id=
     // a.userId where a.city =:city", nativeQuery = true)
     // List<User> getUserByCity(String city);
+
+    Optional<User> findByEmail(String email);
+
+    Optional<User> findByUsername(String username);;
 }

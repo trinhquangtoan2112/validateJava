@@ -4,11 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -19,7 +24,7 @@ import java.util.Set;
 @Entity(name = "User")
 @Table(name = "tbl_user")
 
-public class User extends AbstractEntity {
+public class User extends AbstractEntity<Long> implements UserDetails, Serializable {
     @Column(name = "first_name")
     private String firstName;
 
@@ -70,4 +75,36 @@ public class User extends AbstractEntity {
             address.setUser(this); // save user_id
         }
     }
+
+    @OneToMany(mappedBy = "user")
+    private Set<GroupHasUser> groups = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserHasRole> roles = new HashSet<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

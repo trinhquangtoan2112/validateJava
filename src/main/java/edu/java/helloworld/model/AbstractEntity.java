@@ -5,17 +5,28 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractEntity<T extends Serializable> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private T id;
+
+    @CreatedBy
+    @Column(name = "create_By")
+    private T createBy;
+
+    @LastModifiedBy
+    @Column(name = "update_By")
+    private T updateBy;
 
     @Column(name = "created_at")
     @CreationTimestamp

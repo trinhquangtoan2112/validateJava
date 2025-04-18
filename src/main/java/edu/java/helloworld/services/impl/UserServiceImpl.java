@@ -7,12 +7,14 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -88,7 +90,7 @@ public class UserServiceImpl implements UserService {
       String message = String.format("email=%s,id=%s,code=%s", user.getEmail(), user.getId(), "code@123");
       kafkaTemplate.send("confirm-account-topic", message);
     }
-    return user.getId();
+    return 1;
   }
 
   @Override
@@ -253,6 +255,12 @@ public class UserServiceImpl implements UserService {
     }
     return PageRespones.builder().pageNo(pageable.getPageNumber()).pageSize(pageable.getPageSize())
         .totalPage(list.getTotalPages()).item(list.stream().toList()).build();
+  }
+
+  @Override
+  public UserDetailsService userDetailsService() {
+    return username -> userRepository.findByUsername(username)
+        .orElseThrow(() -> new ResourceNotFoundException("Khong tim thay nguoi dung"));
   }
 
 }

@@ -5,9 +5,9 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5433/postgres
     username: postgres
-    password: toan2002
+    password: toan20021234
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:

@@ -3,14 +3,17 @@ package edu.java.helloworld.services;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import edu.java.helloworld.dto.request.UserRequestDTO;
 import edu.java.helloworld.dto.response.Repository.UserDetailResponse;
 import edu.java.helloworld.dto.response.page.PageRespones;
 import edu.java.helloworld.model.UserStatus;
 
-public interface UserService{
-    
+public interface UserService {
+
+    UserDetailsService userDetailsService();
+
     long saveUser(UserRequestDTO requestDTO);
 
     void updateUser(long userID, UserRequestDTO requestDTO);
@@ -20,12 +23,14 @@ public interface UserService{
     void deleteUser(long userID);
 
     UserDetailResponse getUser(long userID);
-    List<UserDetailResponse> getAllUser(int pageSize,int pageNo,String sortBy);
 
-    PageRespones<?> getAllUserWithMultiColoum(int pageSize,int pageNo,String... sortBy);
+    List<UserDetailResponse> getAllUser(int pageSize, int pageNo, String sortBy);
 
-    PageRespones<?> getAllUserWithColoumandSearch(int pageSize,int pageNo,String search,String sortBy);
-    PageRespones<?> advancedSearch(int pageSize,int pageNo,String sortBy,String address,String... search);
+    PageRespones<?> getAllUserWithMultiColoum(int pageSize, int pageNo, String... sortBy);
 
-    PageRespones<?> advancedSearchWithSpecition(Pageable pageable,String[] address,String[] user);
+    PageRespones<?> getAllUserWithColoumandSearch(int pageSize, int pageNo, String search, String sortBy);
+
+    PageRespones<?> advancedSearch(int pageSize, int pageNo, String sortBy, String address, String... search);
+
+    PageRespones<?> advancedSearchWithSpecition(Pageable pageable, String[] address, String[] user);
 }
