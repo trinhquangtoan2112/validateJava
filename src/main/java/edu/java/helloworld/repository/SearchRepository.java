@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class SearchRepository {
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -132,8 +133,7 @@ public class SearchRepository {
         Root<User> root = query.from(User.class);
 
         Predicate predicate = criteriaBuilder.conjunction();
-        UserSearchCriteriaQueryConsumer queryConsumer = new UserSearchCriteriaQueryConsumer(criteriaBuilder, predicate,
-                root);
+        UserSearchCriteriaQueryConsumer queryConsumer = new UserSearchCriteriaQueryConsumer(criteriaBuilder, predicate, root);
         criteriaList.forEach(queryConsumer);
         predicate = queryConsumer.getPredicate();
         if (StringUtils.hasLength(address)) {
@@ -241,17 +241,22 @@ public class SearchRepository {
     public Predicate toPredicateUser(Root<User> root, CriteriaBuilder builder, SpecSearchCriteria criteria) {
 
         return switch (criteria.getOperation()) {
-            case EQUALITY -> builder.equal(root.get(criteria.getKey()), criteria.getValue());
-            case NEGATION -> builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
+            case EQUALITY ->
+                builder.equal(root.get(criteria.getKey()), criteria.getValue());
+            case NEGATION ->
+                builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
             case GREATER_THAN ->
                 builder.greaterThan(root.get(criteria.getKey()), criteria.getValue().toString());
             case LESS_THAN ->
                 builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString());
             case LIKE ->
                 builder.like(root.get(criteria.getKey()), "%" + criteria.getValue().toString() + "%");
-            case STARTS_WITH -> builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
-            case ENDS_WITH -> builder.like(root.get(criteria.getKey()), "%" + criteria.getValue());
-            case CONTAINS -> builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+            case STARTS_WITH ->
+                builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
+            case ENDS_WITH ->
+                builder.like(root.get(criteria.getKey()), "%" + criteria.getValue());
+            case CONTAINS ->
+                builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
         };
 
     }
@@ -260,17 +265,22 @@ public class SearchRepository {
             SpecSearchCriteria criteria) {
 
         return switch (criteria.getOperation()) {
-            case EQUALITY -> builder.equal(root.get(criteria.getKey()), criteria.getValue());
-            case NEGATION -> builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
+            case EQUALITY ->
+                builder.equal(root.get(criteria.getKey()), criteria.getValue());
+            case NEGATION ->
+                builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
             case GREATER_THAN ->
                 builder.greaterThan(root.get(criteria.getKey()), criteria.getValue().toString());
             case LESS_THAN ->
                 builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString());
             case LIKE ->
                 builder.like(root.get(criteria.getKey()), "%" + criteria.getValue().toString() + "%");
-            case STARTS_WITH -> builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
-            case ENDS_WITH -> builder.like(root.get(criteria.getKey()), "%" + criteria.getValue());
-            case CONTAINS -> builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+            case STARTS_WITH ->
+                builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
+            case ENDS_WITH ->
+                builder.like(root.get(criteria.getKey()), "%" + criteria.getValue());
+            case CONTAINS ->
+                builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
         };
 
     }

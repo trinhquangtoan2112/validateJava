@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class MailServiceImpl implements MailService {
+
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine springTemplateEngine;
     @Value("${spring.mail.from}")
@@ -37,7 +38,7 @@ public class MailServiceImpl implements MailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        helper.setFrom(emailFrom, "Trịnh Toàn"); // TODO gan email from
+        helper.setFrom(emailFrom, "Trịnh Toàn"); //  gan email from
 
         if (recipients.contains(",")) {
             helper.setTo(InternetAddress.parse(recipients));
@@ -63,7 +64,7 @@ public class MailServiceImpl implements MailService {
     public String sendConfirmEmail(String email, Long id, String code)
             throws MessagingException, UnsupportedEncodingException {
         log.info("send confirm link");
-        // TODO Auto-generated method stub
+        //  Auto-generated method stub
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, "UTF-8");
@@ -89,7 +90,7 @@ public class MailServiceImpl implements MailService {
     public String sendConfirmEmailByKafka(String message)
             throws MessagingException, UnsupportedEncodingException {
         log.info("send confirm link kafka");
-        // TODO Auto-generated meth kafod stub
+        //  Auto-generated meth kafod stub
         String[] arr = message.split(",");
         String email = arr[0].substring(arr[0].indexOf("=") + 1);
         String id = arr[1].substring(arr[1].indexOf("=") + 1);

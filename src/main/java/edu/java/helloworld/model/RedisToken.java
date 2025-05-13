@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import org.springframework.data.redis.core.RedisHash;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @RedisHash("Redistoken")
 public class RedisToken implements Serializable {
+
     private String id;
     private String accessToken;
     private String refreshToken;

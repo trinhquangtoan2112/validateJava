@@ -86,7 +86,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseSuccess getUser(@PathVariable @Min(1) int userId) {
         userService.getUser(userId);
-        return new ResponseSuccess(HttpStatus.OK, "Them du lieu thanh cong", userService.getUser(userId));
+        return new ResponseSuccess(HttpStatus.OK, "Thêm dữ liệu thành công", userService.getUser(userId));
     }
 
     @GetMapping("/list")
@@ -94,8 +94,8 @@ public class UserController {
             @RequestParam(defaultValue = "20", required = false) int pageSize,
             @RequestParam(required = false) String sortBy) {
 
-        List<UserDetailResponse> list = userService.getAllUser(pageNo, pageSize, sortBy);
-        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong", list);
+        List<UserDetailResponse> userList = userService.getAllUser(pageNo, pageSize, sortBy);
+        return new ResponseSuccess(HttpStatus.OK, "Lấy dữ liệu thành công", userList);
 
     }
 
@@ -106,7 +106,7 @@ public class UserController {
             @RequestParam(required = false) String... sortBy) {
 
         PageRespones<?> list = userService.getAllUserWithMultiColoum(pageNo, pageSize, sortBy);
-        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong", list);
+        return new ResponseSuccess(HttpStatus.OK, "Lấy dữ liệu thành công", list);
 
     }
 
@@ -117,7 +117,7 @@ public class UserController {
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String sortBy) {
         PageRespones<?> list = userService.getAllUserWithColoumandSearch(pageSize, pageNo, search, sortBy);
-        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong", list);
+        return new ResponseSuccess(HttpStatus.OK, "Lấy dữ liệu thành công", list);
     }
 
     @Operation(description = "advanced-search-criteria", summary = "advanced-search-criteria")
@@ -127,7 +127,7 @@ public class UserController {
             @RequestParam(required = false) String address,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String... search) {
-        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",
+        return new ResponseSuccess(HttpStatus.OK, "Lấy dữ liệu thành công",
                 userService.advancedSearch(pageSize, pageNo, sortBy, address, search));
     }
 
@@ -136,7 +136,7 @@ public class UserController {
     public ResponseSuccess advancedSearchSpecification(Pageable pageable,
             @RequestParam(required = false) String[] address,
             @RequestParam(required = false) String[] user) {
-        return new ResponseSuccess(HttpStatus.OK, "lay du lieu thanh cong",
+        return new ResponseSuccess(HttpStatus.OK, "Lấy dữ liệu thành công",
                 userService.advancedSearchWithSpecition(pageable, address, user));
     }
 
